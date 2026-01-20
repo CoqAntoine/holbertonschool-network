@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Configures /etc/hosts so localhost resolves to 127.0.0.2 and facebook.com resolves to 8.8.8.8
 
-if [ "$EUID" -ne 0]; then
+if [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
     exit 1
 fi
