@@ -10,19 +10,24 @@ LOCALHOST_IP="127.0.0.2"
 FACEBOOK_IP="8.8.8.8"
 HOSTS_FILE="/etc/hosts"
 BACKUP_FILE="/etc/hosts.bak"
+TMP_FILE="/tmp/hosts.tmp"
 
 cp "$HOSTS_FILE" "$BACKUP_FILE"
 
-if grep -q "^.*localhost" "$HOSTS_FILE"; then
-    sed -i "s/^.*localhost/$LOCALHOST_IP localhost/" "$HOSTS_FILE"
+cp "$HOSTS_FILE" "$TMP_FILE"
+
+if grep -q "^.*localhost" "$TMP_FILE"; then
+    sed -i "s/^.*localhost/$LOCALHOST_IP localhost/" "$TMP_FILE"
 else
-    echo "$LOCALHOST_IP localhost" >> "$HOSTS_FILE"
+    echo "$LOCALHOST_IP localhost" >> "$TMP_FILE"
 fi
 
-if grep -q "^.*facebook.com" "$HOSTS_FILE"; then
-    sed -i "s/^.*facebook.com/$FACEBOOK_IP facebook.com/" "$HOSTS_FILE"
+if grep -q "^.*facebook.com" "$TMP_FILE"; then
+    sed -i "s/^.*facebook.com/$FACEBOOK_IP facebook.com/" "$TMP_FILE"
 else
-    echo "$FACEBOOK_IP facebook.com" >> "$HOSTS_FILE"
+    echo "$FACEBOOK_IP facebook.com" >> "$TMP_FILE"
 fi
+
+mv "$TMP_FILE" "$HOSTS_FILE"
 
 echo "Hosts file updated successfully"
