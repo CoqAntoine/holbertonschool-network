@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Configures /etc/hosts so localhost resolves to 127.0.0.2 and facebook.com resolves to 8.8.8.8
+
+if [ "$EUID" -ne 0]; then
+    echo "Please run as root"
+    exit 1
+fi
+
+LOCALHOST_IP="127.0.0.2"
+FACEBOOK_IP="8.8.8.8"
+HOSTS_FILE="/etc/hosts"
+BACKUP_FILE="/etc/hosts.bak"
+
+cp "$HOSTS_FILE" "$BACKUP_FILE"
+
+if grep -q "^.*localhost" "$HOSTS_FILE"; then
+    sed -i "s/^.*localhost/$LOCALHOST_IP localhost/" "$HOSTS_FILE"
+else
+    echo "$LOCALHOST_IP localhost" >> "$HOSTS_FILE"
+fi
+
+if grep -q "^.*facebook.com" "$HOSTS_FILE"; then
+    sed -i "s/^.*facebook.com/$FACEBOOK_IP facebook.com/" "$HOSTS_FILE"
+else
+    echo "$FACEBOOK_IP facebook.com" >> "$HOSTS_FILE"
+fi
+
+echo "Hosts file updated successfully"
