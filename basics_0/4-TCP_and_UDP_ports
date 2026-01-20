@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-#Script that displays listening ports that only shows listening sockets
-#and that shows the PID and name of the program to which each socket belongs
+# Displays all listening TCP and UDP ports with the PID and program name
 
-#-l → listening sockets only
-#-n → numeric output (no DNS resolution)
-#-t → TCP
-#-u → UDP
-#-p → displays the PID and the program name
-
-netstat -tulnup
+ss -lntup
