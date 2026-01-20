@@ -8,4 +8,4 @@
 #-u → UDP
 #-p → displays the PID and the program name
 
-ss -lntup
+netstat -tulup
